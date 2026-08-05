@@ -22,11 +22,11 @@ from grounding_dino.groundingdino.util.inference import load_model, load_image, 
 # =========================
 # CONFIG
 # =========================
-TEXT_PROMPT = "small red fruit."
-LABEL_MAPPING = {"small red fruit": 0}
+TEXT_PROMPT = "underwater gate."
+LABEL_MAPPING = {"underwater gate": 0}
 
-IMAGE_DIR = REPO_ROOT / "dataset" / "cherry-detection-1" / "train" / "images"
-LABEL_DIR = REPO_ROOT / "dataset" / "cherry-detection-1" / "train" / "labels"
+IMAGE_DIR = REPO_ROOT / "dataset" / "gate_dataset" / "seed" / "images"
+LABEL_DIR = REPO_ROOT / "dataset" / "gate_dataset" / "seed" / "labels"
 OUTPUT_DIR = EVAL_DIR / "ground_dino_eval" / "dino_pred"
 
 SAM2_CHECKPOINT = REPO_ROOT / "Grounded-SAM-2" / "checkpoints" / "sam2.1_hiera_large.pt"

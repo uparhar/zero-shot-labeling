@@ -1,9 +1,13 @@
+# virtual environment
+.venv/
+
 # datasets
 dataset/
 __pycache__/
 
 # model weights
 *.pt
+*.onnx
 
 # training outputs
 _pycache_/

@@ -15,6 +15,10 @@ Pillow
 matplotlib
 scikit-learn
 safetensors
+mcap
+mcap-ros2-support
 
+# Note: mcap / mcap-ros2-support are for tools/bag_to_video.py and
+# tools/scan_bags.py — reading ROS2 .mcap bag files without a ROS2 install.
 # Note: Grounded-SAM-2 provides its own requirements and is a submodule.
 # Install the submodule extras by following Grounded-SAM-2/README.md if needed.

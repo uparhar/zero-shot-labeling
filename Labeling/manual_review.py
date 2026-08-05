@@ -265,10 +265,10 @@ class ManualReviewSession:
 def main() -> None:
     """Run the manual review UI with the repository default locations."""
     config = ManualReviewConfig(
-        image_source=REPO_ROOT / "dataset" / "cherry-detection-1" / "valid" / "images",
-        dino_labels=REPO_ROOT / "dataset" / "dino_out" / "labels",
-        yolo_labels=REPO_ROOT / "dataset" / "yolo_predictions" / "yolo_pt_pred" / "labels",
-        output_labels=REPO_ROOT / "dataset" / "autolabels" / "manual_review_labels",
+        image_source=REPO_ROOT / "dataset" / "gate_dataset" / "raw_unlabeled" / "images",
+        dino_labels=REPO_ROOT / "dataset" / "gate_dataset" / "dino_out" / "labels",
+        yolo_labels=REPO_ROOT / "dataset" / "gate_yolo_predictions" / "yolo_gate_seg_bootstrap_pred" / "labels",
+        output_labels=REPO_ROOT / "dataset" / "gate_autolabels" / "manual_review_labels",
     )
     ManualReviewSession(config).run()
 

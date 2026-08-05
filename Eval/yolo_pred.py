@@ -8,10 +8,10 @@ import time
 import torch
 
 DATA_ROOT = Path(__file__).resolve().parent.parent
-IMAGE_DIR = DATA_ROOT / "compare" / "pred_images"
+IMAGE_DIR = DATA_ROOT / "dataset" / "gate_yolo_data_set" / "valid" / "images"
 PROJECT_DIR = str((DATA_ROOT / 'yolo_train_out').resolve())
-PROJECT_DIR = Path(PROJECT_DIR) 
-RUN_NAME    = 'yolo_pt_manual_label'
+PROJECT_DIR = Path(PROJECT_DIR)
+RUN_NAME    = 'yolo_gate_seg_real_100ep'
 
 best_weights = PROJECT_DIR / RUN_NAME / 'weights' / 'best.pt'
 

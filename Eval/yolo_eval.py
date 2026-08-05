@@ -8,12 +8,12 @@ import time
 import torch
 
 DATA_ROOT = Path(__file__).resolve().parent.parent
-YOLO_DATA_DIR = DATA_ROOT / "dataset" / "cherry-detection-1"
+YOLO_DATA_DIR = DATA_ROOT / "dataset" / "gate_yolo_data_set"
 
-YAML_PATH   = str((YOLO_DATA_DIR / 'bench.yaml').resolve())
+YAML_PATH   = str((YOLO_DATA_DIR / 'data.yaml').resolve())
 PROJECT_DIR = str((DATA_ROOT / 'yolo_train_out').resolve())
-PROJECT_DIR = Path(PROJECT_DIR) 
-RUN_NAME    = 'yolo_pt_manual_label'
+PROJECT_DIR = Path(PROJECT_DIR)
+RUN_NAME    = 'yolo_gate_seg_real_100ep'
 
 
 best_weights = PROJECT_DIR / RUN_NAME / 'weights' / 'best.pt'
