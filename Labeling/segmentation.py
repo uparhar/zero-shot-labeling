@@ -8,6 +8,7 @@ from Labeling.common import (
     iter_image_paths,
     mask_to_yolo_polygon,
     read_yolo_labels,
+    resolve_device,
     write_yolo_seg_labels,
     yolo_to_xyxy,
 )
@@ -29,15 +30,13 @@ def load_sam2_predictor(checkpoint: Path, model_config: str, device: str | None 
     Returns:
         A loaded ``SAM2ImagePredictor`` ready for ``set_image``/``predict``.
     """
-    import torch
-
     if str(GROUNDED_SAM2_ROOT) not in sys.path:
         sys.path.insert(0, str(GROUNDED_SAM2_ROOT))
 
     from sam2.build_sam import build_sam2
     from sam2.sam2_image_predictor import SAM2ImagePredictor
 
-    resolved_device = device or ("mps" if torch.backends.mps.is_available() else "cpu")
+    resolved_device = resolve_device(device)
     sam2_model = build_sam2(model_config, str(checkpoint), device=resolved_device)
     return SAM2ImagePredictor(sam2_model)
 

@@ -12,6 +12,8 @@ import sys
 
 import cv2
 
+from Labeling.common import iter_image_paths
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -158,6 +160,8 @@ class ManualReviewSession:
         current_idx = 0
         final_idx = 0
 
+        cv2.namedWindow("Annotator", cv2.WINDOW_NORMAL)
+
         while True:
             canvas = img.copy()
 
@@ -210,7 +214,13 @@ class ManualReviewSession:
                     cv2.rectangle(canvas, (x1, y1), (x2, y2), (0, 255, 255), thickness)
 
             cv2.imshow("Annotator", canvas)
-            key = cv2.waitKey(0)
+            # Windows' highgui backend sometimes shows a blank/white window
+            # until the event loop gets pumped a few times; a single
+            # blocking waitKey(0) can be issued before the first paint.
+            # Polling with a short timeout forces repaint on every tick.
+            key = -1
+            while key == -1:
+                key = cv2.waitKey(30)
 
             if key == ord("a"):
                 if current_idx < len(review_list):
@@ -258,7 +268,7 @@ class ManualReviewSession:
 
     def run(self) -> None:
         """Review all images in the configured source directory."""
-        for img_path in self.config.image_source.glob("*.jpg"):
+        for img_path in iter_image_paths(self.config.image_source):
             self.review_image(img_path)
 
 

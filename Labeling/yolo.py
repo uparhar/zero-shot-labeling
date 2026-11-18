@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from Labeling.common import copy_split, create_yolo_yaml, ensure_directories, iter_image_paths, split_image_paths
+from Labeling.common import copy_split, create_yolo_yaml, ensure_directories, iter_image_paths, resolve_device, split_image_paths
 
 
 def prepare_yolo_dataset(
@@ -63,7 +63,6 @@ def train_yolo(
         Path to the `best.pt` weights file produced by training.
     """
     from ultralytics import YOLO
-    import torch
 
     weights_path = project_dir / run_name / "weights" / "last.pt"
     if weights_path.exists():
@@ -80,7 +79,7 @@ def train_yolo(
         batch=batch_size,
         project=str(project_dir),
         name=run_name,
-        device=device or ("mps" if torch.backends.mps.is_available() else "cpu"),
+        device=resolve_device(device),
         exist_ok=True,
         resume=resume and resume_flag,
         workers=workers,
@@ -113,7 +112,6 @@ def run_yolo_inference(
         Path to the inference run folder containing predictions and `labels/`.
     """
     from ultralytics import YOLO
-    import torch
 
     model = YOLO(str(weights_path))
     model.predict(
@@ -123,7 +121,7 @@ def run_yolo_inference(
         exist_ok=True,
         conf=conf,
         iou=iou,
-        device=device or ("mps" if torch.backends.mps.is_available() else "cpu"),
+        device=resolve_device(device),
         save=True,
         save_txt=True,
         save_conf=True,
@@ -184,7 +182,6 @@ def train_yolo_seg(
         Path to the `best.pt` weights file produced by training.
     """
     from ultralytics import YOLO
-    import torch
 
     weights_path = project_dir / run_name / "weights" / "last.pt"
     if weights_path.exists():
@@ -201,7 +198,7 @@ def train_yolo_seg(
         batch=batch_size,
         project=str(project_dir),
         name=run_name,
-        device=device or ("mps" if torch.backends.mps.is_available() else "cpu"),
+        device=resolve_device(device),
         exist_ok=True,
         resume=resume and resume_flag,
         workers=workers,
@@ -229,7 +226,6 @@ def run_yolo_seg_inference(
         Path to the inference run folder containing predictions and `labels/`.
     """
     from ultralytics import YOLO
-    import torch
 
     model = YOLO(str(weights_path))
     model.predict(
@@ -239,7 +235,7 @@ def run_yolo_seg_inference(
         exist_ok=True,
         conf=conf,
         iou=iou,
-        device=device or ("mps" if torch.backends.mps.is_available() else "cpu"),
+        device=resolve_device(device),
         save=True,
         save_txt=True,
         save_conf=True,

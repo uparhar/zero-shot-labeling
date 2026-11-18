@@ -6,6 +6,24 @@ import random
 import shutil
 
 
+def resolve_device(device: str | None) -> str:
+    """Return ``device`` unchanged if set, otherwise auto-detect cuda/mps/cpu.
+
+    Checks CUDA before MPS since a machine can only have one or the other,
+    and CUDA is the common case off of Apple hardware.
+    """
+    if device:
+        return device
+
+    import torch
+
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
+
 def iter_image_paths(image_dir: Path, suffixes: Sequence[str] = (".jpg", ".jpeg", ".png")) -> list[Path]:
     """Return sorted image file paths in ``image_dir`` matching ``suffixes``.
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import sys
 
-from Labeling.common import ensure_directories, iter_image_paths, write_yolo_labels
+from Labeling.common import ensure_directories, iter_image_paths, resolve_device, write_yolo_labels
 from Labeling.config import REPO_ROOT
 
 
@@ -101,7 +101,7 @@ def run_grounding_dino_directory(
 
     from grounding_dino.groundingdino.util.inference import load_image, load_model, predict
 
-    resolved_device = device or ("mps" if torch.backends.mps.is_available() else "cpu")
+    resolved_device = resolve_device(device)
     config_path = grounding_dino_config or (REPO_ROOT / "Grounded-SAM-2" / "grounding_dino" / "groundingdino" / "config" / "GroundingDINO_SwinT_OGC.py")
     checkpoint_path = grounding_dino_checkpoint or (REPO_ROOT / "Grounded-SAM-2" / "gdino_checkpoints" / "groundingdino_swint_ogc.pth")
 
